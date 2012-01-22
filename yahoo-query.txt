@@ -1,0 +1,1 @@
+http://ichart.yahoo.com/table.csv?s=^DJI&a=0&b=1&c=2010&d=0&e=21&f=2012&g=d&ignore=.csv
