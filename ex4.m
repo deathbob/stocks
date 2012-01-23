@@ -21,12 +21,12 @@ close all;
 #clc
 
 
-X = load('features.txt');
-y = load('classifications.txt');
+% X = load('features.txt');
+% y = load('classifications.txt');
 
 
-% X = load('train.txt');
-% y = load('train-ys.txt');
+X = load('train.txt');
+y = load('train-ys.txt');
 
 %% Setup the parameters you will use for this exercise
 input_layer_size  = size(X, 2); # 30 ?
@@ -252,7 +252,7 @@ fprintf('\nValidation Set Accuracy: %f\n', mean(double(pred == y)) * 100);
 X = load('test.txt');
 y = load('test-ys.txt');
 
-pred = predict(Theta1, Theta2, X)
+pred = predict(Theta1, Theta2, X);
 fprintf('\nTest Set Accuracy: %f\n', mean(double(pred == y)) * 100);
 
 

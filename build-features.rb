@@ -1,8 +1,8 @@
 require 'csv'
 
 
-#csv = CSV.read('dji2009.csv')
-csv = CSV.read('dji2010.csv')
+csv = CSV.read('dji2009.csv')
+#csv = CSV.read('dji2010.csv')
 #csv = CSV.read('dji2011.csv')
 
 csv = csv.reverse # most recent date is at top, we want to build the features from oldest to newest
