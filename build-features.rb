@@ -11,13 +11,17 @@ csv.pop# pop header line
 closes = csv.map{|x| x[-1]} # all we're interested in is the date and the closing value.
 closes = closes.map{|x| x.to_i}
 MIN = closes.min
+MAX = closes.max
 
 #closes = closes.map{|x| x - MIN }
-closes = closes.map{|x| x % 256 } # This seems to be much better, but does it make sense?
+# closes = closes.map{|x| (x - MIN) / 256  } # This seems to be much better, but does it make sense?
+closes = closes.map{|x| (x / MAX.to_f) * 256 } 
 
 MIN = closes.min
 MAX = closes.max
-STEP = (MAX - MIN) / 11 # band size
+BANDS = 9
+STEP = (MAX - MIN) / BANDS # band size
+HISTORY = 100
 
 #puts closes.inspect
 
@@ -25,7 +29,7 @@ features = {}
 cow = []
 
 closes.each_with_index do |x, idx|
-  e = idx + 29 # val to end at
+  e = idx + HISTORY # val to end at
 
   date = csv[idx][0]
   feats = closes[idx..e]  
@@ -55,10 +59,14 @@ File.open("features.txt", 'w+') do |f|
 end
 
 def map_val(val)
-  foo = ((val.to_f - MIN) / STEP).to_i
+  pig = (val.to_f - MIN) / STEP
+  # puts val
+  # puts pig
+  foo = (pig).to_i
   if foo == 0
 #    return (MAX / STEP) 
-    return 1 # lump the low end together.
+#    return 1 # lump the low end together.
+    return BANDS + 1
   else
     foo
   end

@@ -25,14 +25,14 @@ y = load('classifications.txt');
 
 %% Setup the parameters you will use for this exercise
 input_layer_size  = size(X, 2); # 30 ?
-hidden_layer_size = 101   % 25 hidden units
+hidden_layer_size = 120   % 25 hidden units
 %  You should also try different values of lambda
 lambda = 1.9
 %  After you have completed the assignment, change the MaxIter to a larger
 %  value to see how more training helps.
 iterations = 500
 
-num_labels = 12;          % 10 labels, from 1 to 10                             % (note that we have mapped "0" to label 10)
+num_labels = 10;          % 10 labels, from 1 to 10                             % (note that we have mapped "0" to label 10)
 m = size(X, 1);
 
                           
