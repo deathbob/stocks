@@ -20,25 +20,38 @@ clear ;
 close all; 
 #clc
 
+% test_nn_sizes = [29, 27, 25, 21, 18, 8, 40, 60, 80, 100, 120, 121, 140, 157, 163, 191, 101, 200]
+% cs = [0.01, 0.03, 0.1, 0.3, 1, 1.5, 1.9, 3, 6, 10, 15, 21, 30];
 
-X = load('features.txt');
-y = load('classifications.txt');
+test_nn_sizes = [7, 8, 9, 20, 21, 22, 23, 24, 25, 26, 27, 39, 40, 41, 90, 100, 110, 120, 130, 157]
+cs = [0, .01, .05, .1, .2, .3, .9, 1, 1.1, 1.2, 2, 3]
 
+% X = load('features.txt');
+% y = load('classifications.txt');
+for cow_heart = 1:size(test_nn_sizes, 2)
 
-% X = load('train.txt');
-% y = load('train-ys.txt');
+    
+    for june_bug = 1:size(cs,2)
+        for linus = 1:2
+'---------------------------------------------------------------------------------------'            
+    lambda = cs(june_bug)
+    hidden_layer_size = test_nn_sizes(cow_heart)
+#hidden_layer_size = 20   % 25 hidden units
+
+X = load('train.txt');
+y = load('train-ys.txt');
 
 %% Setup the parameters you will use for this exercise
 input_layer_size  = size(X, 2); # 30 ?
-hidden_layer_size = 10   % 25 hidden units
+
 %  You should also try different values of lambda
 #lambda = 1.3
-lambda = .3
+
 %  After you have completed the assignment, change the MaxIter to a larger
 %  value to see how more training helps.
 iterations = 1000
 
-num_labels = 2;# did it go up or down?
+num_labels = 2;# simpl, did DJI go up or down?
 
 m = size(X, 1);
 
@@ -196,7 +209,7 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 %  advanced optimizers are able to train our cost functions efficiently as
 %  long as we provide them with the gradient computations.
 %
-fprintf('\nTraining Neural Network... \n')
+fprintf('Training Neural Network... \n')
 
 options = optimset('MaxIter', iterations);
 
@@ -242,21 +255,29 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 %  you compute the training set accuracy.
 
 
-pred = predict(Theta1, Theta2, X);
-fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y)) * 100);
-foo = [pred'; y']
+% pred = predict(Theta1, Theta2, X);
+% fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y)) * 100);
+% foo = [pred'; y'];
 
 
 X = load('validation.txt');
 y = load('validation-ys.txt');
 pred = predict(Theta1, Theta2, X);
-fprintf('\nValidation Set Accuracy: %f\n', mean(double(pred == y)) * 100);
-foo = [pred'; y']
+fprintf('Validation Set Accuracy:                  %f\n', mean(double(pred == y)) * 100);
+foo = [pred'; y'];
 
 
 X = load('test.txt');
 y = load('test-ys.txt');
 pred = predict(Theta1, Theta2, X);
-fprintf('\nTest Set Accuracy: %f\n', mean(double(pred == y)) * 100);
-foo = [pred'; y']
+bangle =  mean(double(pred == y)) * 100;
+if (bangle > 60.0)
+    fprintf('HOLY BALLS LOOK HERE *****************************************************\n')
+    fprintf('****************************************************************************')
+endif
+fprintf('Test Set Accuracy:                                  %f\n', bangle);
+foo = [pred'; y'];
 
+end;
+end;
+end;

@@ -25,7 +25,7 @@ puts MAX
 BANDS = 9
 STEP = (MAX - MIN) / BANDS # band size
 puts STEP
-HISTORY = 5
+HISTORY = 30
 
 #puts closes.inspect
 
