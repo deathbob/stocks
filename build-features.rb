@@ -2,8 +2,8 @@ require 'csv'
 
 
 #csv = CSV.read('dji2009.csv')
-#csv = CSV.read('dji2010.csv')
-csv = CSV.read('dji2011.csv')
+csv = CSV.read('dji2010.csv')
+#csv = CSV.read('dji2011.csv')
 
 csv = csv.reverse # most recent date is at top, we want to build the features from oldest to newest
 csv.pop# pop header line
@@ -19,9 +19,9 @@ closes = closes.map{|x| (x / MAX.to_f) * 256 }
 
 MIN = closes.min
 MAX = closes.max
-BANDS = 9
+BANDS = 3
 STEP = (MAX - MIN) / BANDS # band size
-HISTORY = 100
+HISTORY = 150
 
 #puts closes.inspect
 
@@ -51,17 +51,9 @@ puts
 puts cow.first.inspect, cow.last.inspect
 puts
 
-File.open("features.txt", 'w+') do |f|
-  cow.each do |line|
-    f.write(line[1].join(' ')) # just the values
-    f.write("\n")
-  end
-end
 
 def map_val(val)
   pig = (val.to_f - MIN) / STEP
-  # puts val
-  # puts pig
   foo = (pig).to_i
   if foo == 0
 #    return (MAX / STEP) 
@@ -72,16 +64,45 @@ def map_val(val)
   end
 end
 
+length = cow.size
+twenty = (length * 0.2).to_i
+forty  = twenty * 2
+sixty = forty + twenty
+eighty = forty + forty
+
+train = cow[0..sixty]
+validation = cow[(sixty + 1)..eighty]
+test = cow[(eighty + 1)..-1]
+
+['train', 'validation', 'test'].each do |w|
+  File.open("#{w}.txt", 'w+') do |f|
+    (eval(w)).each do |line|
+      f.write(line[1].join(' ')) # just the values
+      f.write("\n")
+    end
+  end
+  File.open("#{w}-ys.txt", 'w+') do |f|
+    (eval(w)).each do |line|
+      f.write(map_val(line[2])) # just the next day
+      f.write("\n")
+    end
+  end
+end
+
+
+File.open("features.txt", 'w+') do |f|
+  cow.each do |line|
+    f.write(line[1].join(' ')) # just the values
+    f.write("\n")
+  end
+end
+
 File.open('classifications.txt', 'w+') do |f|
   cow.each do |line|
     f.write(map_val(line[2])) # just the next day
     f.write("\n")
   end
 end
-
-
-
-
 
 
 

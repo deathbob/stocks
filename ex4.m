@@ -20,19 +20,24 @@ clear ;
 close all; 
 #clc
 
+
 X = load('features.txt');
 y = load('classifications.txt');
 
+
+% X = load('train.txt');
+% y = load('train-ys.txt');
+
 %% Setup the parameters you will use for this exercise
 input_layer_size  = size(X, 2); # 30 ?
-hidden_layer_size = 120   % 25 hidden units
+hidden_layer_size = 10   % 25 hidden units
 %  You should also try different values of lambda
-lambda = 1.9
+lambda = 0.9
 %  After you have completed the assignment, change the MaxIter to a larger
 %  value to see how more training helps.
-iterations = 500
+iterations = 1000
 
-num_labels = 10;          % 10 labels, from 1 to 10                             % (note that we have mapped "0" to label 10)
+num_labels = 4;          % 10 labels, from 1 to 10                             % (note that we have mapped "0" to label 10)
 m = size(X, 1);
 
                           
@@ -236,7 +241,18 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 
 
 pred = predict(Theta1, Theta2, X);
-
 fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y)) * 100);
+
+X = load('validation.txt');
+y = load('validation-ys.txt');
+
+pred = predict(Theta1, Theta2, X);
+fprintf('\nValidation Set Accuracy: %f\n', mean(double(pred == y)) * 100);
+
+X = load('test.txt');
+y = load('test-ys.txt');
+
+pred = predict(Theta1, Theta2, X)
+fprintf('\nTest Set Accuracy: %f\n', mean(double(pred == y)) * 100);
 
 
