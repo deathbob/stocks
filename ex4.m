@@ -23,8 +23,10 @@ close all;
 % test_nn_sizes = [29, 27, 25, 21, 18, 8, 40, 60, 80, 100, 120, 121, 140, 157, 163, 191, 101, 200]
 % cs = [0.01, 0.03, 0.1, 0.3, 1, 1.5, 1.9, 3, 6, 10, 15, 21, 30];
 
-test_nn_sizes = [7, 8, 9, 20, 21, 22, 23, 24, 25, 26, 27, 39, 40, 41, 90, 100, 110, 120, 130, 157]
-cs = [0, .01, .05, .1, .2, .3, .9, 1, 1.1, 1.2, 2, 3]
+#test_nn_sizes = [7, 8, 9, 20, 21, 22, 23, 24, 25, 26, 27, 39, 40, 41, 90, 100, 110, 120, 130, 157]
+#cs = [0, .01, .05, .1, .2, .3, .9, 1, 1.1, 1.2, 2, 3]
+test_nn_sizes = [21, 23, 41, 110]
+cs = [.9, 0]
 
 % X = load('features.txt');
 % y = load('classifications.txt');
@@ -32,7 +34,7 @@ for cow_heart = 1:size(test_nn_sizes, 2)
 
     
     for june_bug = 1:size(cs,2)
-        for linus = 1:2
+        % for linus = 1:2
 '---------------------------------------------------------------------------------------'            
     lambda = cs(june_bug)
     hidden_layer_size = test_nn_sizes(cow_heart)
@@ -49,9 +51,9 @@ input_layer_size  = size(X, 2); # 30 ?
 
 %  After you have completed the assignment, change the MaxIter to a larger
 %  value to see how more training helps.
-iterations = 1000
+iterations = 50000
 
-num_labels = 2;# simpl, did DJI go up or down?
+num_labels = 2;# simple, did DJI go up or down?
 
 m = size(X, 1);
 
@@ -278,6 +280,6 @@ endif
 fprintf('Test Set Accuracy:                                  %f\n', bangle);
 foo = [pred'; y'];
 
-end;
+% end;
 end;
 end;
